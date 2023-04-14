@@ -1,26 +1,30 @@
-/* binary_print.c */
-
-#include <stdio.h>
 #include "main.h"
+#include <stdio.h>
 
-/* Function to print binary representation of a number */
-void print_binary(unsigned long int n) {
-    int i;
+/**
+ * print_binary - Print the binary representation of a number
+ * @n: Unsigned long integer to print in binary
+ *
+ * Return: None
+ */
+void print_binary(unsigned long int n)
+{
+	unsigned long int mask = 1UL << (sizeof(unsigned long int) * 8 - 1);
+	int flag = 0;
 
-    // Find the most significant bit
-    unsigned long int msb = 1UL << (sizeof(unsigned long int) * 8 - 1);
+	while (mask)
+	{
+		if (n & mask)
+		{
+			putchar('1');
+			flag = 1;
+		}
+		else if (flag)
+			putchar('0');
 
-    // Iterate through each bit from MSB to LSB
-    for (i = 0; i < SIZE_OF_ULI; i++) {
-        // Check if the current bit is set
-        if ((n & msb) != 0)
-            printf("1");
-        else
-            printf("0");
+		mask >>= 1;
+	}
 
-        // Shift the bit to the right by 1
-        n <<= 1;
-    }
-
-    printf("\n");
+	if (!flag)
+		putchar('0');
 }
